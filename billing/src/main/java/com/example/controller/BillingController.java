@@ -34,52 +34,81 @@ public class BillingController {
     @Autowired
 
     private BillingService billingService;
+//
+//    // Generate a new bill
+//
+//    @PostMapping("/generate")
+//
+//    public ResponseEntity<Billing> generateBill(
+//
+//            @RequestParam Long customerId,
+//
+//            @RequestParam List<Long> productIds) {
+//
+//        Billing bill = billingService.generateBill(customerId, productIds);
+//
+//        return ResponseEntity.ok(bill);
+//
+//    }
+//
+//    // Get all bills for a customer
+//
+//    @GetMapping("/customer/{customerId}")
+//
+//    public ResponseEntity<List<Billing>> getBillsByCustomerId(@PathVariable Long customerId) {
+//
+//        List<Billing> bills = billingService.getBillsByCustomerId(customerId);
+//
+//        return ResponseEntity.ok(bills);
+//
+//    }
+//
+//    // Get bill by bill number
+//
+//    @GetMapping("/{billNo}")
+//
+//    public ResponseEntity<Billing> getBillByBillNo(@PathVariable Long billNo) {
+//
+//        Billing bill = billingService.getBillByBillNo(billNo);
+//
+//        if (bill != null) {
+//
+//            return ResponseEntity.ok(bill);
+//
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//
+//    }
+//
+//}
 
-    // Generate a new bill
+@PostMapping("/generate")
+public ResponseEntity<Billing> generateBill(
+        @RequestParam Long customerId,
+        @RequestParam List<Long> productIds,
+        @RequestParam String shippingAddress,
+        @RequestParam String paymentMethod) {
 
-    @PostMapping("/generate")
+    Billing bill = billingService.generateBill(customerId, productIds, shippingAddress, paymentMethod);
+    return ResponseEntity.ok(bill);
+}
 
-    public ResponseEntity<Billing> generateBill(
 
-            @RequestParam Long customerId,
-
-            @RequestParam List<Long> productIds) {
-
-        Billing bill = billingService.generateBill(customerId, productIds);
-
-        return ResponseEntity.ok(bill);
-
-    }
-
-    // Get all bills for a customer
-
-    @GetMapping("/customer/{customerId}")
-
+@GetMapping("/customer/{customerId}")
     public ResponseEntity<List<Billing>> getBillsByCustomerId(@PathVariable Long customerId) {
-
         List<Billing> bills = billingService.getBillsByCustomerId(customerId);
-
         return ResponseEntity.ok(bills);
-
     }
-
-    // Get bill by bill number
 
     @GetMapping("/{billNo}")
-
     public ResponseEntity<Billing> getBillByBillNo(@PathVariable Long billNo) {
-
         Billing bill = billingService.getBillByBillNo(billNo);
-
         if (bill != null) {
-
             return ResponseEntity.ok(bill);
-
         }
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-
     }
-
 }
+
  
